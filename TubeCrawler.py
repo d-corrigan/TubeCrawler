@@ -8,6 +8,9 @@ There is a sleep timer (around line 43) that slows the crawl down to avoid detec
 ** There is no waranty or guarantee that this will continue to work from day to day 
 or that you wont get blackballed by YouTube.
 This program requires pafy, requests & lxml which can be installed using pip from www.python.org
+
+I am in no way responsible for illegal or mischievious use of this program 
+Use at your own risk.
 """
 
 
