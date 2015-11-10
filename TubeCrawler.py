@@ -99,9 +99,9 @@ class VideoCrawler:
 	              	         print "is in file"
 	              	 else:
 
-						with open("video_data.csv", "a") as myfile:
-	    						myfile.write(video_obj.title + "," + video_obj.duration + ","  + best.resolution + "," + video_url + "\n")
-						best.download(quiet=False)
+				with open("video_data.csv", "a") as myfile:
+	    				myfile.write(video_obj.title + "," + video_obj.duration + ","  + best.resolution + "," + video_url + "\n")
+				best.download(quiet=False)
 		
 
 		"""
