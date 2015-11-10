@@ -11,6 +11,8 @@ This program requires pafy, requests & lxml which can be installed using pip fro
 
 I am in no way responsible for illegal or mischievious use of this program 
 Use at your own risk.
+ 
+
 """
 
 
@@ -19,6 +21,7 @@ from colorama import init
 import requests
 import pafy
 import time
+import csv
 
 
 class VideoCrawler:
@@ -76,21 +79,30 @@ class VideoCrawler:
 		print "Video Title: " + video_obj.title
 		#print video_obj.description
 		#print video_obj.duration
+		print video_obj.length
 
-		best = video_obj.getbest()
+		best = video_obj.getbest(preftype="mp4")
 		
 		#print best.resolution
-
 
 
 		"""
 		create a CSV document for the data collected from the videos extracted
 		"""	
-		with open("video_data.csv", "a") as myfile:
-    			myfile.write(video_obj.title + "," + video_obj.duration + ","  + best.resolution + "," + video_url + "\n")
 
-		best.download(quiet=False)
-	
+
+		with open("video_data.csv", "a") as myfile:
+			with open('video_data.csv', 'rt') as f:
+	    		 reader = csv.reader(f, delimiter=',')
+	     		 for row in reader:
+	          		if video_obj.title == row[0]: # if the username shall be on column 3 (-> index 2)
+	              	         print "is in file"
+	              	 else:
+
+						with open("video_data.csv", "a") as myfile:
+	    						myfile.write(video_obj.title + "," + video_obj.duration + ","  + best.resolution + "," + video_url + "\n")
+						best.download(quiet=False)
+		
 
 		"""
 		adds the prefix "http://www.youtube.com" to the url collected from the sidebar to complete the link
@@ -99,12 +111,14 @@ class VideoCrawler:
 		s = "http://www.youtube.com"
 		new_list = [s + link for link in links]
 
+		#remove duplicates
+		myList = sorted(set(new_list))
 
-		#for link in new_list:
+		#for link in myList:
 			#print link
 
 
-		video = Video( video_obj.title, uploader, new_list )
+		video = Video( video_obj.title, uploader, myList )
 		self.videos.append(video)
 
 		return video
@@ -135,7 +149,7 @@ print "\r\n"
 yes_or_no = raw_input("Would you like to use the default starting URL:  [y or n] ")
 
 if yes_or_no == 'y':
-	response = "https://www.youtube.com/watch?v=ytNNG2yWi9Y"
+	response = "https://www.youtube.com/watch?v=Ej6A7euo2K8"
 else:
 	#If using python version 3 change raw_input to input
 	response = raw_input("Please enter starting YouTube URL: ")
