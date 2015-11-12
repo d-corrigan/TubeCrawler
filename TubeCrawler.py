@@ -22,18 +22,23 @@ import requests
 import pafy
 import time
 import csv
+import random
+
 
 
 class VideoCrawler:
 	
-	def __init__(self, starting_url, depth):
+	def __init__(self, starting_url, depth, duration):
 		self.starting_url = starting_url
 		self.depth = depth
 		self.current_depth = 0
+		self.duration = duration
 		self.depth_links = []
 		self.videos = []
 
 	def crawl(self):
+
+
 		video = self.get_video_from_link(self.starting_url)
 		self.videos.append(video)
 
@@ -50,10 +55,16 @@ class VideoCrawler:
 				#SLEEP TIMER added to avoid getting blackballed by YouTube
 				time.sleep(5)
 
+				max_time = int(raw_input(duration))
+				start_time = time.time()  # remember when we started
+		
+				if (time.time() - start_time) > max_time: 
+					print (Ctrl-Z)
+
+					
 
 			self.current_depth += 1
 			self.depth_links.append(current_links)
-
 
 		return
 
@@ -79,7 +90,7 @@ class VideoCrawler:
 		print "Video Title: " + video_obj.title
 		#print video_obj.description
 		#print video_obj.duration
-		print video_obj.length
+		#print video_obj.length
 
 		best = video_obj.getbest(preftype="mp4")
 		
@@ -96,12 +107,19 @@ class VideoCrawler:
 	    		 reader = csv.reader(f, delimiter=',')
 	     		 for row in reader:
 	          		if video_obj.title == row[0]: # if the username shall be on column 3 (-> index 2)
-	              	         print "is in file"
+	              	         print "Duplicate"
 	              	 else:
 
-				with open("video_data.csv", "a") as myfile:
-	    				myfile.write(video_obj.title + "," + video_obj.duration + ","  + best.resolution + "," + video_url + "\n")
-				best.download(quiet=False)
+						with open("video_data.csv", "a") as myfile:
+	    						myfile.write(video_obj.title + "," + video_obj.duration + ","  + best.resolution + "," + video_url + "\n")
+						
+ 						try:
+   							best.download(quiet=False)
+   						except Exception as e:
+     						 write_to_page( "<p>Error: %s</p>" % str(e) )
+
+
+						
 		
 
 		"""
@@ -149,7 +167,11 @@ print "\r\n"
 yes_or_no = raw_input("Would you like to use the default starting URL:  [y or n] ")
 
 if yes_or_no == 'y':
-	response = "https://www.youtube.com/watch?v=Ej6A7euo2K8"
+	foo = ["https://www.youtube.com/watch?v=Ej6A7euo2K8", "https://www.youtube.com/watch?v=0in9XQkiVuA", 
+	"https://www.youtube.com/watch?v=JZ9EsfAJatU", "https://www.youtube.com/watch?v=nn_Z4fKizVM", 
+	"https://www.youtube.com/watch?v=xAg7z6u4NE8"]
+
+	response = random.choice(foo)
 else:
 	#If using python version 3 change raw_input to input
 	response = raw_input("Please enter starting YouTube URL: ")
@@ -158,7 +180,10 @@ else:
 #If using python version 3 change raw_input to input
 user_depth = raw_input("Please enter the depth of the crawl: ")
 
-crawler = VideoCrawler(response, user_depth)
+#If using python version 3 change raw_input to input
+duration = raw_input("Please enter the duration in seconds: ")
+
+crawler = VideoCrawler(response, user_depth, duration)
 crawler.crawl()
 
 
