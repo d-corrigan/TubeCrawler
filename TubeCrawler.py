@@ -17,7 +17,6 @@ Use at your own risk.
 
 
 from lxml import html
-from colorama import init
 import requests
 import pafy
 import time
@@ -35,6 +34,11 @@ class VideoCrawler:
 		self.duration = duration
 		self.depth_links = []
 		self.videos = []
+
+	@staticmethod
+	def get_sec(s):
+    	 l = s.split(':')
+    	 return int(l[0]) * 3600 + int(l[1]) * 60 + int(l[2])
 
 	def crawl(self):
 
@@ -55,11 +59,11 @@ class VideoCrawler:
 				#SLEEP TIMER added to avoid getting blackballed by YouTube
 				time.sleep(5)
 
-				max_time = int(raw_input(duration))
-				start_time = time.time()  # remember when we started
+				#max_time = int(raw_input(duration))
+				#start_time = time.time()  # remember when we started
 		
-				if (time.time() - start_time) > max_time: 
-					print (Ctrl-Z)
+				#if (time.time() - start_time) > max_time: 
+					#print (Ctrl-Z)
 
 					
 
@@ -92,6 +96,9 @@ class VideoCrawler:
 		#print video_obj.duration
 		#print video_obj.length
 
+		sec = video_obj.duration
+		print "Duration:" + str(self.get_sec(sec)) + " in seconds."
+
 		best = video_obj.getbest(preftype="mp4")
 		
 		#print best.resolution
@@ -101,26 +108,26 @@ class VideoCrawler:
 		create a CSV document for the data collected from the videos extracted
 		"""	
 
+		too_long = int(self.get_sec(sec)) < 600
+
 
 		with open("video_data.csv", "a") as myfile:
 			with open('video_data.csv', 'rt') as f:
 	    		 reader = csv.reader(f, delimiter=',')
 	     		 for row in reader:
 	          		if video_obj.title == row[0]: # if the username shall be on column 3 (-> index 2)
-	              	         print "Duplicate"
+	              	         print "is in file"
 	              	 else:
 
-						with open("video_data.csv", "a") as myfile:
-	    						myfile.write(video_obj.title + "," + video_obj.duration + ","  + best.resolution + "," + video_url + "\n")
+	              	 	if too_long == True:
+							with open("video_data.csv", "a") as myfile:
+									myfile.write(video_obj.title.replace(",", " ").encode('UTF-8') + ","+ uploader.encode('UTF-8') + "," + video_obj.duration.encode('UTF-8') + ","  + best.resolution.encode('UTF-8') + "," + video_url.encode('UTF-8') + "\n")
 						
- 						try:
-   							best.download(quiet=False)
-   						except Exception as e:
-     						 write_to_page( "<p>Error: %s</p>" % str(e) )
-
-
-						
-		
+							try:
+								if too_long == True:
+									best.download(quiet=False)
+							except Exception as e:
+								print ( "<p>Error: %s</p>" % str(e) )
 
 		"""
 		adds the prefix "http://www.youtube.com" to the url collected from the sidebar to complete the link
@@ -181,7 +188,9 @@ else:
 user_depth = raw_input("Please enter the depth of the crawl: ")
 
 #If using python version 3 change raw_input to input
-duration = raw_input("Please enter the duration in seconds: ")
+#duration = raw_input("Please enter the duration in seconds: ")
+
+duration = 5000
 
 crawler = VideoCrawler(response, user_depth, duration)
 crawler.crawl()
