@@ -105,6 +105,14 @@ class VideoCrawler:
 
 		no_comma_title = video_obj.title.replace(",", " ")
 		
+		foo = ["https://www.youtube.com/watch?v=COKlObhGt50", "https://www.youtube.com/watch?v=ZyvhnHzfGac", 
+		"https://www.youtube.com/watch?v=esVZxjLrwH0", "https://www.youtube.com/watch?v=fOQ9svAVE7U", 
+		"https://www.youtube.com/watch?v=xAg7z6u4NE8","https://www.youtube.com/watch?v=q-gYcvipozY",
+		"https://www.youtube.com/watch?v=jnshSRAIFW0","https://www.youtube.com/watch?v=ni4V-kN0LMI",
+		"https://www.youtube.com/watch?v=bbA2sYeUiSE","https://www.youtube.com/watch?v=S3Q_oyOWzHA",
+		"https://www.youtube.com/watch?v=Y6XPUCMbf_E","https://www.youtube.com/watch?v=OGebiWgEkOw"]
+
+		response = random.choice(foo)
 
 
 		"""
@@ -113,13 +121,17 @@ class VideoCrawler:
 
 		too_long = int(self.get_sec(sec)) < 600
 
-
 		with open("video_data.csv", "a") as myfile:
 			with open('video_data.csv', 'rt') as f:
 	    		 reader = csv.reader(f, delimiter=',')
 	     		 for row in reader:
 	          		if no_comma_title.encode('utf-8') == row[0]: # if the username shall be on column 0 (-> index 2)
-	              	         print "Duplicate---   Skip File"
+							self.duration += 1
+							too_long = True;
+
+							if self.duration % 5 == 0 :
+								crawler = VideoCrawler(response, 50, 5000)
+								crawler.crawl()
 	              	 else:
 
 	              	 	if too_long == True:
@@ -179,7 +191,8 @@ yes_or_no = raw_input("Would you like to use the default starting URL:  [y or n]
 if yes_or_no == 'y':
 	foo = ["https://www.youtube.com/watch?v=Ej6A7euo2K8", "https://www.youtube.com/watch?v=0in9XQkiVuA", 
 	"https://www.youtube.com/watch?v=JZ9EsfAJatU", "https://www.youtube.com/watch?v=nn_Z4fKizVM", 
-	"https://www.youtube.com/watch?v=xAg7z6u4NE8"]
+	"https://www.youtube.com/watch?v=xAg7z6u4NE8","https://www.youtube.com/watch?v=joBmbh0AGSQ",
+	"https://www.youtube.com/watch?v=OGebiWgEkOw"]
 
 	response = random.choice(foo)
 else:
