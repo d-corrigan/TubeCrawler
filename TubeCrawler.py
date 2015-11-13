@@ -103,6 +103,9 @@ class VideoCrawler:
 		
 		#print best.resolution
 
+		no_comma_title = video_obj.title.replace(",", " ")
+		
+
 
 		"""
 		create a CSV document for the data collected from the videos extracted
@@ -115,13 +118,13 @@ class VideoCrawler:
 			with open('video_data.csv', 'rt') as f:
 	    		 reader = csv.reader(f, delimiter=',')
 	     		 for row in reader:
-	          		if video_obj.title == row[0]: # if the username shall be on column 3 (-> index 2)
+	          		if no_comma_title.encode('utf-8') == row[0]: # if the username shall be on column 0 (-> index 2)
 	              	         print "is in file"
 	              	 else:
 
 	              	 	if too_long == True:
 							with open("video_data.csv", "a") as myfile:
-									myfile.write(video_obj.title.replace(",", " ").encode('UTF-8') + ","+ uploader.encode('UTF-8') + "," + video_obj.duration.encode('UTF-8') + ","  + best.resolution.encode('UTF-8') + "," + video_url.encode('UTF-8') + "\n")
+									myfile.write(no_comma_title.encode('UTF-8') + ","+ uploader.encode('UTF-8') + "," + video_obj.duration.encode('UTF-8') + ","  + best.resolution.encode('UTF-8') + "," + video_url.encode('UTF-8') + "\n")
 						
 							try:
 								if too_long == True:
