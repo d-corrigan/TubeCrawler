@@ -119,7 +119,7 @@ class VideoCrawler:
 	    		 reader = csv.reader(f, delimiter=',')
 	     		 for row in reader:
 	          		if no_comma_title.encode('utf-8') == row[0]: # if the username shall be on column 0 (-> index 2)
-	              	         print "is in file"
+	              	         print "Duplicate---   Skip File"
 	              	 else:
 
 	              	 	if too_long == True:
