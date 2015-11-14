@@ -17,6 +17,7 @@ Use at your own risk.
 
 
 from lxml import html
+import BeautifulSoup
 import requests
 import pafy
 import time
@@ -110,7 +111,12 @@ class VideoCrawler:
 		"https://www.youtube.com/watch?v=xAg7z6u4NE8","https://www.youtube.com/watch?v=q-gYcvipozY",
 		"https://www.youtube.com/watch?v=jnshSRAIFW0","https://www.youtube.com/watch?v=ni4V-kN0LMI",
 		"https://www.youtube.com/watch?v=bbA2sYeUiSE","https://www.youtube.com/watch?v=S3Q_oyOWzHA",
-		"https://www.youtube.com/watch?v=Y6XPUCMbf_E","https://www.youtube.com/watch?v=OGebiWgEkOw"]
+		"https://www.youtube.com/watch?v=Y6XPUCMbf_E","https://www.youtube.com/watch?v=OGebiWgEkOw",
+		"https://www.youtube.com/watch?v=KS0ooghAfag","https://www.youtube.com/watch?v=6eWDgNrLYps",
+		"https://www.youtube.com/watch?v=waL5Cf-CFJU","https://www.youtube.com/watch?v=G6uQ8EyxMO0",
+		"https://www.youtube.com/watch?v=wMuNjnNyaiA","https://www.youtube.com/watch?v=d82DmbYeAuI",
+		"https://www.youtube.com/watch?v=Cts3MrHnYIU","https://www.youtube.com/watch?v=1H_XqO5OwWM",
+		"https://www.youtube.com/watch?v=i_twGzgSq74"]
 
 		response = random.choice(foo)
 
@@ -136,7 +142,7 @@ class VideoCrawler:
 
 	              	 	if too_long == True:
 							with open("video_data.csv", "a") as myfile:
-									myfile.write(no_comma_title.encode('UTF-8') + ","+ uploader.encode('UTF-8') + "," + video_obj.duration.encode('UTF-8') + ","  + best.resolution.encode('UTF-8') + "," + video_url.encode('UTF-8') + "\n")
+									myfile.write(no_comma_title.encode('UTF-8', 'ignore') + ","+ uploader.encode('UTF-8') + "," + video_obj.duration.encode('UTF-8') + ","  + best.resolution.encode('UTF-8') + "," + video_url.encode('UTF-8') + "\n")
 						
 							try:
 								if too_long == True:
