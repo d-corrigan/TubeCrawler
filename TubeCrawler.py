@@ -116,7 +116,8 @@ class VideoCrawler:
 		"https://www.youtube.com/watch?v=waL5Cf-CFJU","https://www.youtube.com/watch?v=G6uQ8EyxMO0",
 		"https://www.youtube.com/watch?v=wMuNjnNyaiA","https://www.youtube.com/watch?v=d82DmbYeAuI",
 		"https://www.youtube.com/watch?v=Cts3MrHnYIU","https://www.youtube.com/watch?v=1H_XqO5OwWM",
-		"https://www.youtube.com/watch?v=i_twGzgSq74"]
+		"https://www.youtube.com/watch?v=i_twGzgSq74","https://www.youtube.com/watch?v=e5q1T7bKoxQ",
+		"https://www.youtube.com/watch?v=5v22MTHHtZg","https://www.youtube.com/watch?v=1ANS4awOxrI"]
 
 		response = random.choice(foo)
 
@@ -125,7 +126,7 @@ class VideoCrawler:
 		create a CSV document for the data collected from the videos extracted
 		"""	
 
-		too_long = int(self.get_sec(sec)) < 600
+		too_long = int(self.get_sec(sec)) > 800
 
 		with open("video_data.csv", "a") as myfile:
 			with open('video_data.csv', 'rt') as f:
@@ -140,12 +141,12 @@ class VideoCrawler:
 								crawler.crawl()
 	              	 else:
 
-	              	 	if too_long == True:
+	              	 	if too_long == False:
 							with open("video_data.csv", "a") as myfile:
 									myfile.write(no_comma_title.encode('UTF-8', 'ignore') + ","+ uploader.encode('UTF-8') + "," + video_obj.duration.encode('UTF-8') + ","  + best.resolution.encode('UTF-8') + "," + video_url.encode('UTF-8') + "\n")
 						
 							try:
-								if too_long == True:
+								if too_long == False:
 									best.download(quiet=False)
 							except Exception as e:
 								print ( "<p>Error: %s</p>" % str(e) )
@@ -198,7 +199,19 @@ if yes_or_no == 'y':
 	foo = ["https://www.youtube.com/watch?v=Ej6A7euo2K8", "https://www.youtube.com/watch?v=0in9XQkiVuA", 
 	"https://www.youtube.com/watch?v=JZ9EsfAJatU", "https://www.youtube.com/watch?v=nn_Z4fKizVM", 
 	"https://www.youtube.com/watch?v=xAg7z6u4NE8","https://www.youtube.com/watch?v=joBmbh0AGSQ",
-	"https://www.youtube.com/watch?v=OGebiWgEkOw"]
+	"https://www.youtube.com/watch?v=OGebiWgEkOw","https://www.youtube.com/watch?v=COKlObhGt50", "https://www.youtube.com/watch?v=ZyvhnHzfGac", 
+		"https://www.youtube.com/watch?v=esVZxjLrwH0", "https://www.youtube.com/watch?v=fOQ9svAVE7U", 
+		"https://www.youtube.com/watch?v=xAg7z6u4NE8","https://www.youtube.com/watch?v=q-gYcvipozY",
+		"https://www.youtube.com/watch?v=jnshSRAIFW0","https://www.youtube.com/watch?v=ni4V-kN0LMI",
+		"https://www.youtube.com/watch?v=bbA2sYeUiSE","https://www.youtube.com/watch?v=S3Q_oyOWzHA",
+		"https://www.youtube.com/watch?v=Y6XPUCMbf_E","https://www.youtube.com/watch?v=OGebiWgEkOw",
+		"https://www.youtube.com/watch?v=KS0ooghAfag","https://www.youtube.com/watch?v=6eWDgNrLYps",
+		"https://www.youtube.com/watch?v=waL5Cf-CFJU","https://www.youtube.com/watch?v=G6uQ8EyxMO0",
+		"https://www.youtube.com/watch?v=wMuNjnNyaiA","https://www.youtube.com/watch?v=d82DmbYeAuI",
+		"https://www.youtube.com/watch?v=Cts3MrHnYIU","https://www.youtube.com/watch?v=1H_XqO5OwWM",
+		"https://www.youtube.com/watch?v=i_twGzgSq74","https://www.youtube.com/watch?v=iDGe_XCJGRM",
+		"https://www.youtube.com/watch?v=e5q1T7bKoxQ","https://www.youtube.com/watch?v=5v22MTHHtZg",
+		"https://www.youtube.com/watch?v=1ANS4awOxrI"]
 
 	response = random.choice(foo)
 else:
