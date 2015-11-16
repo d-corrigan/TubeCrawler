@@ -104,7 +104,8 @@ class VideoCrawler:
 		
 		#print best.resolution
 
-		no_comma_title = video_obj.title.replace(",", " ")
+		no_apos_title = video_obj.title.replace("'", " ")
+		no_comma_title = no_apos_title.replace(",", " ")
 		
 		foo = ["https://www.youtube.com/watch?v=COKlObhGt50", "https://www.youtube.com/watch?v=ZyvhnHzfGac", 
 		"https://www.youtube.com/watch?v=esVZxjLrwH0", "https://www.youtube.com/watch?v=fOQ9svAVE7U", 
