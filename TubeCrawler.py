@@ -106,6 +106,7 @@ class VideoCrawler:
 
 		no_apos_title = video_obj.title.replace("'", " ")
 		no_comma_title = no_apos_title.replace(",", " ")
+		no_tm_title = no_comma_title.replace("™"," ")
 		
 		foo = ["https://www.youtube.com/watch?v=COKlObhGt50", "https://www.youtube.com/watch?v=ZyvhnHzfGac", 
 		"https://www.youtube.com/watch?v=esVZxjLrwH0", "https://www.youtube.com/watch?v=fOQ9svAVE7U", 
